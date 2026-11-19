@@ -1,7 +1,14 @@
-function renderBooks(filter) {
-  const booksWrapper = document.querySelector('.books');
-  const books = getBooks();
+let books;
 
+async function renderBooks(filter) {
+  const booksWrapper = document.querySelector('.books');
+
+  booksWrapper.classList += ' books__loading'
+
+  if (!books) {
+    books = await getBooks();
+  }
+  booksWrapper.classList.remove('books__loading')
 
 // FILTER 
 
@@ -74,10 +81,9 @@ setTimeout(() => {
 // FAKE DATA
 
 function getBooks() {
-  new Promise ((resolve) => {
-
-  })
-  return [
+  return new Promise ((resolve) => {
+    setTimeout(() => {
+      resolve ([
         {
           id: 1,
           title: "Crack the Coding Interview",
@@ -166,5 +172,7 @@ function getBooks() {
           salePrice: null,
           rating: 4.5,
         },
-      ]
+      ]);
+    }, 1000);
+  });
 }
